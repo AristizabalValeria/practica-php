@@ -1,15 +1,14 @@
 <?php
-require_once __DIR__ . '/../config/DB.php';
-require_once __DIR__ . '/../models/Usuario.php';
-
+require_once dirname(__DIR__) . '/config/DB.php';
+require_once dirname(__DIR__) . '/models/Usuario.php';
 class UsuarioRepository{
     private $db;
 
-    public function __construct() {
+    public function __construct(){
         $this->db = DB::getConnection();
     }
 
-    public function mapearUsuario($row) {
+    public function mapearUsuario($row){
         return new Usuario(
             $row['id'],
             $row['cedula'],
@@ -66,10 +65,10 @@ class UsuarioRepository{
         }
     }
 
-    public function guardarUsuario(Usuario $usuario) {
+    public function guardarUsuario(Usuario $usuario){
         $clave_hash = password_hash($usuario->getClave(), PASSWORD_DEFAULT);
         $fecha_actual = $usuario->getFechaRegistro()->format('Y-m-d H:i:s');
-        $query = $this->db->prepare("INSERT INTO usuarios (cedula, nombre_completo, telefono, correo, saldo, QR, clave, rol, fecha_registro, estado, id_centro_trabajo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $query = $this->db->prepare("INSERT INTO usuario (cedula, nombre_completo, telefono, correo, saldo, QR, clave, rol, fecha_registro, estado, id_centro_trabajo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $query->bind_param(
             "ssssdsssssi",
             $usuario->getCedula(),
@@ -109,7 +108,7 @@ class UsuarioRepository{
         $query->execute();  
     }
 
-    public function eliminarUsuarioCedula($cedula) {
+    public function eliminarUsuarioCedula($cedula){
         $query = $this->db->prepare("DELETE FROM usuarios WHERE cedula = ?");
         $query->bind_param("s", $cedula);
         $query->execute();

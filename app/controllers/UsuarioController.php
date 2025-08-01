@@ -35,14 +35,20 @@ class UsuarioController{
         }
     }
 
-    public function obtenerUsuarios(){
-        try{
+    public function listarUsuarios() {
+        $usuarios = [];
+
+        if (!empty($_GET['cedula'])) {
+            $usuario = $this->usuarioRepository->obtenerUsuarioPorCedula($_GET['cedula']);
+            if ($usuario) $usuarios[] = $usuario;
+        } elseif (!empty($_GET['correo'])) {
+            $usuario = $this->usuarioRepository->obtenerUsuarioPorCorreo($_GET['correo']);
+            if ($usuario) $usuarios[] = $usuario;
+        } else {
             $usuarios = $this->usuarioRepository->obtenerUsuarios();
-            
-             require_once dirname(__DIR__) . '/views/usuario/index.php';
-        } catch(Exception $e){
-            echo "Error al obtener los usuarios: " . $e->getMessage();
         }
+
+        require_once __DIR__ . '/../views/usuario/index.php';
     }
 
     

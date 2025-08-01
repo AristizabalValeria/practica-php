@@ -35,6 +35,16 @@ class UsuarioController{
         }
     }
 
+    public function obtenerUsuarios(){
+        try{
+            $usuarios = $this->usuarioRepository->obtenerUsuarios();
+            
+             require_once dirname(__DIR__) . '/views/usuario/index.php';
+        } catch(Exception $e){
+            echo "Error al obtener los usuarios: " . $e->getMessage();
+        }
+    }
+
     
 }
 ?>

@@ -10,35 +10,36 @@ class UsuarioRepository{
 
     public function mapearUsuario($row){
         return new Usuario(
-            $row['id'],
-            $row['cedula'],
-            $row['nombre_completo'],
-            $row['telefono'],
-            $row['correo'],
-            $row['saldo'],
+            $row['Id'],
+            $row['Cedula'],
+            $row['Nombre_completo'],
+            $row['Telefono'],
+            $row['Correo'],
+            $row['Saldo'],
             $row['QR'],
-            $row['clave'],
-            $row['rol'],
-            $row['fecha_registro'],
-            $row['estado'],
-            $row['id_centro_trabajo']
+            $row['Clave'],
+            $row['Rol'],
+            $row['Fecha_registro'],
+            $row['Estado'],
+            $row['Id_centro_trabajo']
         );
     }
 
     public function obtenerUsuarios(){
-        $query = $this->db->prepare("SELECT * FROM usuarios");
+        $query = $this->db->prepare("SELECT * FROM usuario");
         $query->execute();
         $result = $query->get_result();
 
         $usuarios = [];
-        $row = $result->fetch_assoc();
-        while ($row) {
+        while ($row = $result->fetch_assoc()) { 
             $usuarios[] = $this->mapearUsuario($row);
         }
+        
+        return $usuarios;
     }
 
     public function obtenerUsuarioPorCedula($cedula){
-        $query = $this->db->prepare("SELECT * FROM usuarios where cedula = ?");
+        $query = $this->db->prepare("SELECT * FROM usuario where cedula = ?");
         $query->bind_param("s", $cedula);
         $query->execute();
         $result = $query->get_result()->fetch_assoc();
@@ -52,7 +53,7 @@ class UsuarioRepository{
     }
 
     public function obtenerUsuarioPorCorreo($correo){
-        $query = $this->db->prepare("SELECT * FROM usuarios where correo = ?");
+        $query = $this->db->prepare("SELECT * FROM usuario where correo = ?");
         $query->bind_param("s", $correo);
         $query->execute();
         $result = $query->get_result()->fetch_assoc();
@@ -89,7 +90,7 @@ class UsuarioRepository{
     public function actualizarUsuario(Usuario $usuario){
         $clave_hash = password_hash($usuario->getClave(), PASSWORD_DEFAULT);
         $fecha_actual = $usuario->getFechaRegistro()->format('Y-m-d H:i:s');
-        $query = $this->db->prepare("UPDATE usuarios SET cedula = ?, nombre_completo = ?, telefono = ?, correo = ?, saldo = ?, QR = ?, clave = ?, rol = ?, fecha_registro = ?, estado = ?, id_centro_trabajo = ? WHERE id = ?");
+        $query = $this->db->prepare("UPDATE usuario SET cedula = ?, nombre_completo = ?, telefono = ?, correo = ?, saldo = ?, QR = ?, clave = ?, rol = ?, fecha_registro = ?, estado = ?, id_centro_trabajo = ? WHERE id = ?");
         $query->bind_param(
             "ssssdssssii",
             $usuario->getCedula(),
@@ -109,7 +110,7 @@ class UsuarioRepository{
     }
 
     public function eliminarUsuarioCedula($cedula){
-        $query = $this->db->prepare("DELETE FROM usuarios WHERE cedula = ?");
+        $query = $this->db->prepare("DELETE FROM usuario WHERE cedula = ?");
         $query->bind_param("s", $cedula);
         $query->execute();
     }

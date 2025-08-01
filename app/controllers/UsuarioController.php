@@ -1,5 +1,5 @@
 <?php
-require_once dirname(__DIR__) . '/config/DB.php';
+require_once dirname(__DIR__, 2) . '/config/DB.php';
 require_once dirname(__DIR__) . '/models/Usuario.php';
 require_once dirname(__DIR__) . '/repositories/UsuarioRepository.php';
 

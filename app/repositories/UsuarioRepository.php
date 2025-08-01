@@ -34,7 +34,6 @@ class UsuarioRepository{
         while ($row = $result->fetch_assoc()) { 
             $usuarios[] = $this->mapearUsuario($row);
         }
-        
         return $usuarios;
     }
 

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Editar Usuario</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-light">
 

@@ -89,10 +89,13 @@ class UsuarioRepository{
 
     public function actualizarUsuario(Usuario $usuario){
         $clave_hash = password_hash($usuario->getClave(), PASSWORD_DEFAULT);
-        $fecha_actual = $usuario->getFechaRegistro()->format('Y-m-d H:i:s');
-        $query = $this->db->prepare("UPDATE usuario SET cedula = ?, nombre_completo = ?, telefono = ?, correo = ?, saldo = ?, QR = ?, clave = ?, rol = ?, fecha_registro = ?, estado = ?, id_centro_trabajo = ? WHERE id = ?");
+        $query = $this->db->prepare("
+            UPDATE usuario 
+            SET Cedula = ?, Nombre_completo = ?, Telefono = ?, Correo = ?, Saldo = ?, QR = ?, Clave = ?, Rol = ?, Estado = ?, Id_centro_trabajo = ? 
+            WHERE Cedula = ?
+        ");
         $query->bind_param(
-            "ssssdssssii",
+            "ssssdsdssii",
             $usuario->getCedula(),
             $usuario->getNombreCompleto(),
             $usuario->getTelefono(),
@@ -101,18 +104,22 @@ class UsuarioRepository{
             $usuario->getQR(),
             $clave_hash,
             $usuario->getRol(),
-            $fecha_actual,
             $usuario->getEstado(),
             $usuario->getIdCentroTrabajo(),
             $usuario->getId()
         );
+
         $query->execute();  
     }
 
     public function eliminarUsuarioCedula($cedula){
-        $query = $this->db->prepare("DELETE FROM usuario WHERE cedula = ?");
-        $query->bind_param("s", $cedula);
-        $query->execute();
+        try{
+            $query = $this->db->prepare("DELETE FROM usuario WHERE Cedula = ?");
+            $query->bind_param("s", $cedula);
+            $query->execute();
+        } catch(Exception $e){
+            throw new Exception("Error al eliminar el usuario: " . $e->getMessage());
+        }
     }
 }
 ?>

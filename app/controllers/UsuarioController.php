@@ -35,6 +35,15 @@ class UsuarioController{
         }
     }
 
+    public function obtenerUsuarioPorCedula($cedula){
+        $usuario = $this->usuarioRepository->obtenerUsuarioPorCedula($cedula);
+        if($usuario){
+            return $usuario;
+        } else {
+            return null;
+        }
+    }
+
     public function listarUsuarios() {
         $usuarios = [];
 
@@ -51,6 +60,44 @@ class UsuarioController{
         require_once __DIR__ . '/../views/usuario/index.php';
     }
 
-    
+    public function editarUsuario(){
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['cedula'])) {
+            try {
+                $id = $_POST['id'];
+                $cedula = $_POST['cedula'];
+                $nombre_completo = $_POST['nombre_completo'];
+                $telefono = $_POST['telefono'];
+                $correo = $_POST['correo'];
+                $saldo = $_POST['saldo'];
+                $QR = $_POST['QR'];
+                $clave = password_hash($_POST['clave'], PASSWORD_DEFAULT);
+                $rol = $_POST['rol'];
+                $fecha_registro = date('Y-m-d H:i:s');
+                $estado = $_POST['estado'];
+                $id_centro_trabajo = $_POST['id_centro_trabajo'];
+
+                $usuario = new Usuario($id, $cedula, $nombre_completo, $telefono, $correo, $saldo, $QR, $clave, $rol, $fecha_registro, $estado, $id_centro_trabajo);
+                $this->usuarioRepository->actualizarUsuario($usuario);
+                exit();
+            } catch (Exception $e) {
+                echo "Error al editar el usuario: " . $e->getMessage();
+            }
+        }
+    }
+
+
+    public function eliminarUsuario(){
+        if (!empty($_GET['cedula'])) {
+            $cedula = $_GET['cedula'];
+            try {
+                $this->usuarioRepository->eliminarUsuarioCedula($cedula);
+                header("Location: /index.php?mensaje=Usuario eliminado correctamente");
+                exit();
+            } catch (Exception $e) {
+                echo "Error al eliminar el usuario: " . $e->getMessage();
+            }
+        }        
+    }
+
 }
 ?>

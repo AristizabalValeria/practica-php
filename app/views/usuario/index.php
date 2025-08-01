@@ -27,12 +27,10 @@
         </div>
     </form>
 
-    <!-- Botón para crear -->
     <div class="mb-3">
         <a href="/register.php" class="btn btn-success">Crear Usuario</a>
     </div>
 
-    <!-- Tabla de usuarios -->
     <table class="table table-striped table-bordered">
         <thead class="table-dark">
             <tr>
@@ -58,8 +56,12 @@
                         <td><?= htmlspecialchars($u->getRol()) ?></td>
                         <td><?= htmlspecialchars($u->getEstado()) ?></td>
                         <td>
-                            <a href="/editar.php?id=<?= $u->getId() ?>" class="btn btn-warning btn-sm">✏ Editar</a>
-                            <a href="/eliminar.php?id=<?= $u->getId() ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Seguro que deseas eliminar este usuario?');">🗑 Eliminar</a>
+                            <a href="/editar.php?cedula=<?= $u->getCedula() ?>" class="btn btn-warning btn-sm">Editar</a>
+                            <a href="/eliminar.php?cedula=<?= urlencode($u->getCedula()) ?>" 
+                                class="btn btn-danger btn-sm"
+                                onclick="return confirm('¿Seguro que deseas eliminar este usuario?');">
+                                Eliminar
+                            </a>
                         </td>
                     </tr>
                 <?php endforeach; ?>

@@ -87,29 +87,25 @@ class UsuarioRepository{
         $query->execute();
     }
 
-    public function actualizarUsuario(Usuario $usuario){
-        $clave_hash = password_hash($usuario->getClave(), PASSWORD_DEFAULT);
+    public function actualizarUsuario($cedula, $nombre_completo, $telefono, $correo, $saldo, $rol, $estado, $id_centro_trabajo){
         $query = $this->db->prepare("
             UPDATE usuario 
-            SET Cedula = ?, Nombre_completo = ?, Telefono = ?, Correo = ?, Saldo = ?, QR = ?, Clave = ?, Rol = ?, Estado = ?, Id_centro_trabajo = ? 
+            SET Nombre_completo = ?, Telefono = ?, Correo = ?, Saldo = ?, Rol = ?, Estado = ?, Id_centro_trabajo = ? 
             WHERE Cedula = ?
         ");
         $query->bind_param(
-            "ssssdsdssii",
-            $usuario->getCedula(),
-            $usuario->getNombreCompleto(),
-            $usuario->getTelefono(),
-            $usuario->getCorreo(),
-            $usuario->getSaldo(),
-            $usuario->getQR(),
-            $clave_hash,
-            $usuario->getRol(),
-            $usuario->getEstado(),
-            $usuario->getIdCentroTrabajo(),
-            $usuario->getId()
+            "sssdssis",
+            $nombre_completo,
+            $telefono,
+            $correo,    
+            $saldo,
+            $rol,
+            $estado,
+            $id_centro_trabajo,
+            $cedula,
         );
 
-        $query->execute();  
+        return $query->execute();  
     }
 
     public function eliminarUsuarioCedula($cedula){

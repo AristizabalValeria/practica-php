@@ -30,6 +30,7 @@ class Usuario {
         $this->id_centro_trabajo = $id_centro_trabajo;
     }
 
+    
     // Getters
     public function getId() { return $this->id; }
     public function getCedula() { return $this->cedula; }

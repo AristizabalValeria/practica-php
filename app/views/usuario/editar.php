@@ -12,6 +12,7 @@
         <h2 class="mb-4">Editar Usuario</h2>
 
         <form method="POST">
+            <input type="hidden" name="id" value="<?= htmlspecialchars($usuario->getId()) ?>">
             <input type="hidden" name="cedula" value="<?= htmlspecialchars($usuario->getCedula()) ?>">
 
             <div class="mb-3">

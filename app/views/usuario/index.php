@@ -30,20 +30,22 @@
     </form>
 
     <div class="mb-3">
-        <a href="/register.php" class="bg-blue-500 text-white px-3 p-1 rounded">Crear Usuario</a>
+        <a href="/registrar.php" class="bg-blue-500 text-white px-4 p-2 rounded">Crear Usuario</a>
+        <a href="/centroTrabajo/index.php" class="bg-red-500 text-white px-4 p-2 rounded">Gestionar centros de trabajo</a>
     </div>
 
     <table class="table-auto w-full text-sm ">
         <thead class="table-dark">
-            <tr>
-            <th class="border border-gray-300 px-4 py-2">ID</th>
-            <th class="border border-gray-300 px-4 py-2">Cédula</th>
-            <th class="border border-gray-300 px-4 py-2">Nombre</th>
-            <th class="border border-gray-300 px-4 py-2">Correo</th>
-            <th class="border border-gray-300 px-4 py-2">Saldo</th>
-            <th class="border border-gray-300 px-4 py-2">Rol</th>
-            <th class="border border-gray-300 px-4 py-2">Estado</th>
-            <th class="border border-gray-300 px-4 py-2">Acciones</th>
+                <tr>
+                <th class="border border-gray-300 px-4 py-2">ID</th>
+                <th class="border border-gray-300 px-4 py-2">Cédula</th>
+                <th class="border border-gray-300 px-4 py-2">Nombre</th>
+                <th class="border border-gray-300 px-4 py-2">Correo</th>
+                <!-- <th class="border border-gray-300 px-4 py-2">Centro de trabajo</th> -->
+                <th class="border border-gray-300 px-4 py-2">Saldo</th>
+                <th class="border border-gray-300 px-4 py-2">Rol</th>
+                <th class="border border-gray-300 px-4 py-2">Estado</th>
+                <th class="border border-gray-300 px-4 py-2">Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -54,6 +56,9 @@
                         <td class="border px-4 py-2"><?= htmlspecialchars($u->getCedula()) ?></td>
                         <td class="border px-4 py-2"><?= htmlspecialchars($u->getNombreCompleto()) ?></td>
                         <td class="border px-4 py-2"><?= htmlspecialchars($u->getCorreo()) ?></td>
+                        <!-- <td class="border px-4 py-2">
+                            
+                        </td> -->
                         <td class="border px-4 py-2"><?= htmlspecialchars($u->getSaldo()) ?></td>
                         <td class="border px-4 py-2"><?= htmlspecialchars($u->getRol()) ?></td>
                         <td class="border px-4 py-2"><?= htmlspecialchars($u->getEstado()) ?></td>

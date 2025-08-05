@@ -1,6 +1,8 @@
 <?php
 require_once dirname(__DIR__, 2) . '/config/DB.php';
 require_once dirname(__DIR__) . '/models/Usuario.php';
+require_once dirname(__DIR__) . '/models/CentroTrabajo.php';
+
 class UsuarioRepository{
     private $db;
 
@@ -33,6 +35,29 @@ class UsuarioRepository{
         $usuarios = [];
         while ($row = $result->fetch_assoc()) { 
             $usuarios[] = $this->mapearUsuario($row);
+        }
+        return $usuarios;
+    }
+
+    public function obtenerUsuariosConCentroTrabajo() {
+        $sql = "
+            SELECT u.*, ct.nombre AS nombre_centro_trabajo
+            FROM usuario u
+            LEFT JOIN centro_trabajo ct ON u.id_centro_trabajo = ct.id
+        ";
+
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        $result = $query->get_result();
+
+        $usuarios = [];
+        while ($row = $result->fetch_assoc()) {
+            $usuario = $this->mapearUsuario($row);
+
+            $centroTrabajo = new CentroTrabajo($row['id_centro_trabajo'], $row['nombre_centro_trabajo']);
+            $usuario->setCentroTrabajo($centroTrabajo);
+
+            $usuarios[] = $usuario;
         }
         return $usuarios;
     }

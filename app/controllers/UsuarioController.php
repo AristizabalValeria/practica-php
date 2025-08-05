@@ -81,7 +81,6 @@ class UsuarioController{
         }
     }
 
-
     public function eliminarUsuario(){
         if (!empty($_GET['cedula'])) {
             $cedula = $_GET['cedula'];

@@ -14,6 +14,7 @@ class Usuario {
     private $fecha_registro;
     private $estado;
     private $id_centro_trabajo;
+    private $centro_trabajo;
 
     public function __construct($id, $cedula, $nombre_completo, $telefono, $correo, $saldo, $QR, $clave, $rol, $fecha_registro, $estado, $id_centro_trabajo) {
         $this->id = $id;
@@ -44,6 +45,7 @@ class Usuario {
     public function getFechaRegistro() { return $this->fecha_registro; }
     public function getEstado() { return $this->estado; }
     public function getIdCentroTrabajo() { return $this->id_centro_trabajo; }
+    public function getCentroTrabajo() { return $this->centro_trabajo; }
 
     // Setters
     public function setCedula($cedula) { $this->cedula = $cedula; }
@@ -57,6 +59,7 @@ class Usuario {
     public function setFechaRegistro($fecha) { $this->fecha_registro = new DateTime($fecha); }
     public function setEstado($estado) { $this->estado = $estado; }
     public function setIdCentroTrabajo($idCentro) { $this->id_centro_trabajo = $idCentro; }
+    public function setCentroTrabajo(CentroTrabajo $ct) {  $this->centro_trabajo = $ct; }
 
 }
 ?>
